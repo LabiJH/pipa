@@ -72,6 +72,7 @@ int main(int argc, char *argv[]){
     printf("Timestamp:   %u\n", coffheader.TimeDateStamp);
     printf("OptHdr size: %u bytes\n", coffheader.SizeOfOptionalHeader);
     printf("Characteristics: 0x%04x\n", coffheader.Characteristics);
+    printf("Number of Sections: %d\n", coffheader.NumberOfSections);
     OptionalHeader opt_header;
     if (!fread(&opt_header,sizeof(opt_header),1,pefile)) {
         fprintf(stderr,"Failed to read Optional Header.\n");
@@ -81,6 +82,21 @@ int main(int argc, char *argv[]){
     printf("Magic Number:   %x\n",opt_header.Magic);
     printf("Entry Address:  0x%x\n",opt_header.AddressOfEntryPoint);
     printf("Image base:     0x%016" PRIx64 "\n", opt_header.ImageBase);
+    fseek(pefile, coffheader.SizeOfOptionalHeader - sizeof(OptionalHeader), SEEK_CUR);
+
+   /* Allocated on the Stack, as it in most cases < 1000 Bytes. */
+    SectionHeader section_headers[coffheader.NumberOfSections];
+    if (!fread(section_headers, sizeof(section_headers), 1, pefile)) {
+        fprintf(stderr,"Failed to read Section Header Data.\n");
+        fclose(pefile);
+        return 1;
+    }
+    for (int i = 0; i < coffheader.NumberOfSections;i++) {
+        printf("--- SECTION HEADER ---\n");
+        printf("Name:     %.8s\n", section_headers[i].Name);
+        printf("Section Address:    0x%x\n\n",section_headers[i].VirtualAddress );
+
+    }
     fclose(pefile);
     return 0;
 }

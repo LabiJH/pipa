@@ -51,4 +51,17 @@ typedef struct {
     uint32_t BaseOfCode;
     uint64_t ImageBase;
 } OptionalHeader;
+
+typedef struct{
+    char Name[8];
+    uint32_t VirtualSize;
+    uint32_t VirtualAddress;
+    uint32_t SizeOfRawData;
+    uint32_t PointerToRawData;
+    uint32_t PointerToRelocations;
+    uint32_t PointerToLinenumbers;
+    uint16_t NumberOfRelocations;
+    uint16_t NumberOfLinenumbers;
+    uint32_t Characteristics;
+} SectionHeader;
 #endif
