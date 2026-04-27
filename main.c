@@ -69,6 +69,14 @@ int main(int argc, char *argv[]){
     printf("Timestamp:   %u\n", coffheader.TimeDateStamp);
     printf("OptHdr size: %u bytes\n", coffheader.SizeOfOptionalHeader);
     printf("Characteristics: 0x%04x\n", coffheader.Characteristics);
+    OptionalHeader opt_header;
+    if (!fread(&opt_header,sizeof(opt_header),1,pefile)) {
+        fprintf(stderr,"Failed to read Optional Header.\n");
+        fclose(pefile);
+        return 1;
+    }
+    printf("Magic Number:: %x\n",opt_header.AddressOfEntryPoint);
+    printf("Entry Address:: 0x%x\n",opt_header.AddressOfEntryPoint);
     fclose(pefile);
     return 0;
 }

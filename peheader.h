@@ -40,4 +40,14 @@ typedef struct {
     uint16_t Characteristics; // https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#characteristics
 } CoffHeader;
 
+typedef struct {
+    uint16_t Magic;
+    uint8_t MajorLinkerVersion;
+    uint8_t MinorLinkerVersion;
+    uint32_t SizeOfCode;
+    uint32_t SizeOfInitalizedData;
+    uint32_t SizeOfUninitalizedData;
+    uint32_t AddressOfEntryPoint;
+    uint32_t BaseOfCode;
+} OptionalHeader;
 #endif
