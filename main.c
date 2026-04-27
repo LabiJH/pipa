@@ -1,6 +1,9 @@
 #include <stddef.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <sys/types.h>
 #include "peheader.h"
 
 int main(int argc, char *argv[]){
@@ -75,8 +78,9 @@ int main(int argc, char *argv[]){
         fclose(pefile);
         return 1;
     }
-    printf("Magic Number:: %x\n",opt_header.AddressOfEntryPoint);
-    printf("Entry Address:: 0x%x\n",opt_header.AddressOfEntryPoint);
+    printf("Magic Number:   %x\n",opt_header.Magic);
+    printf("Entry Address:  0x%x\n",opt_header.AddressOfEntryPoint);
+    printf("Image base:     0x%016" PRIx64 "\n", opt_header.ImageBase);
     fclose(pefile);
     return 0;
 }

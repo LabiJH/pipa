@@ -49,5 +49,6 @@ typedef struct {
     uint32_t SizeOfUninitalizedData;
     uint32_t AddressOfEntryPoint;
     uint32_t BaseOfCode;
+    uint64_t ImageBase;
 } OptionalHeader;
 #endif
